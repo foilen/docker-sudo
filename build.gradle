@@ -1,0 +1,20 @@
+plugins {
+	id 'org.echocat.golang' version '0.1.16'
+}
+
+group 'github.com/foilen/docker-sudo'
+
+golang {
+  
+  dependencies {
+  }
+  
+	build {
+		outputFilenamePattern = 'build/out/docker-sudo'
+	}
+	
+}
+
+
+task wrapper(type: Wrapper) { gradleVersion = '3.2.1' }
+

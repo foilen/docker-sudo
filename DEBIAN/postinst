@@ -1,0 +1,7 @@
+#!/bin/bash
+
+set -e
+
+echo Change docker-sudo ownership and make it sticky
+chown root:root /usr/local/bin/docker-sudo
+chmod u+s /usr/local/bin/docker-sudo
