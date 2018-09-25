@@ -110,6 +110,27 @@ func main() {
 		}
 	}
 
+	if command == "exec" {
+		if len(os.Args) < 4 {
+			showHelp(containerNames, imageNames)
+			os.Exit(1)
+		}
+
+		// Check permitted name
+		imageName := os.Args[2]
+		if arrayContains(imageNames, imageName) {
+			// Get command and arguments
+			cmd := os.Args[3]
+			arguments := os.Args[4:]
+			showExec(imageName, cmd, arguments, userid, userHome)
+			os.Exit(0)
+		} else {
+			fmt.Println("You do not have access to image:", imageName)
+			showHelp(containerNames, imageNames)
+			os.Exit(1)
+		}
+	}
+
 	fmt.Println("Invalid command", command)
 	showHelp(containerNames, imageNames)
 	os.Exit(1)
