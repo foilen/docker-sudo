@@ -42,7 +42,7 @@ cp -rv DEBIAN $DEB_PATH/
 cp -rv build/gopath/build/out/docker-sudo $DEB_PATH/usr/local/bin/
 
 cd $DEB_PATH/..
-dpkg-deb --build docker-sudo
+dpkg-deb --no-uniform-compression --build docker-sudo
 mv docker-sudo.deb $DEB_FILE
 
 echo ----[ Upload to Bintray ]----
