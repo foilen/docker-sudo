@@ -32,7 +32,11 @@ func showExec(imageName string, command string, arguments []string, userId strin
 	if err != nil {
 		log.Fatal(err)
 	}
-	argv := []string{"docker", "run", "-ti", "--rm", "-u", userId, "-v", userHome + ":" + userHome, "-w", workDir, uuid, command}
+	tty := "-i"
+	if isTTY() {
+		tty = "-ti"
+	}
+	argv := []string{"docker", "run", tty, "--rm", "-u", userId, "-v", userHome + ":" + userHome, "-w", workDir, uuid, command}
 	if len(arguments) > 0 {
 		tmp := make([]string, len(argv)+len(arguments))
 		copy(tmp, argv)
