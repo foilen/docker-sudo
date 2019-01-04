@@ -21,7 +21,7 @@ sudo chmod u+s ./build/gopath/build/out/docker-sudo
 ```
 Files with the list of containers per user:
   /etc/docker-sudo/containers-{userName}.conf
-Images folders:
+Custom images folders:
   /etc/docker-sudo/images/{imageName}/Dockerfile
 ```
 

@@ -8,7 +8,7 @@ import (
 	"syscall"
 )
 
-func showExec(imageName string, command string, arguments []string, userId string, userHome string) {
+func showExec(customImageName string, command string, arguments []string, userId string, userHome string) {
 
 	// Get a uuid to use as a tag
 	uuid, err := getCommandOutput("/usr/bin/uuidgen")
@@ -19,7 +19,7 @@ func showExec(imageName string, command string, arguments []string, userId strin
 
 	// Build
 	cmd := exec.Command("/usr/bin/docker", "build", "-t", uuid, ".")
-	cmd.Dir = "/etc/docker-sudo/images/" + imageName
+	cmd.Dir = "/etc/docker-sudo/images/" + customImageName
 	cmd.Stdout = os.Stdout
 	cmd.Stderr = os.Stderr
 	err = cmd.Run()
