@@ -92,6 +92,24 @@ func main() {
 		}
 	}
 
+	if command == "stop" {
+		if len(os.Args) < 3 {
+			showHelp(containerNames, customImageNames)
+			os.Exit(1)
+		}
+
+		// Check permitted name
+		containerName := os.Args[2]
+		if arrayContains(containerNames, containerName) {
+			showStop(containerName)
+			os.Exit(0)
+		} else {
+			fmt.Println("You do not have access to container:", containerName)
+			showHelp(containerNames, customImageNames)
+			os.Exit(1)
+		}
+	}
+
 	if command == "run" {
 		if len(os.Args) < 3 {
 			showHelp(containerNames, customImageNames)
