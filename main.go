@@ -98,15 +98,23 @@ func main() {
 			os.Exit(1)
 		}
 
-		// Check permitted name
+		// Check custom image
 		imageName := os.Args[2]
 		if arrayContains(customImageNames, imageName) {
-			showRun(imageName, userid, userHome)
+			showRunCustomImage(imageName, userid, userHome)
 			os.Exit(0)
 		} else {
-			fmt.Println("You do not have access to the custom image:", imageName)
-			showHelp(containerNames, customImageNames)
-			os.Exit(1)
+
+			// Check valid image name
+			if validateImageName(imageName) {
+				showRunImage(imageName, userid, userHome)
+				os.Exit(0)
+			} else {
+				fmt.Println("The image name is invalid")
+				showHelp(containerNames, customImageNames)
+				os.Exit(1)
+			}
+
 		}
 	}
 
@@ -116,18 +124,26 @@ func main() {
 			os.Exit(1)
 		}
 
-		// Check permitted name
+		// Check custom image
 		imageName := os.Args[2]
+		cmd := os.Args[3]
+		arguments := os.Args[4:]
 		if arrayContains(customImageNames, imageName) {
 			// Get command and arguments
-			cmd := os.Args[3]
-			arguments := os.Args[4:]
-			showExec(imageName, cmd, arguments, userid, userHome)
+			showExecCustomImage(imageName, cmd, arguments, userid, userHome)
 			os.Exit(0)
 		} else {
-			fmt.Println("You do not have access to the custom image:", imageName)
-			showHelp(containerNames, customImageNames)
-			os.Exit(1)
+
+			// Check valid image name
+			if validateImageName(imageName) {
+				showExecImage(imageName, cmd, arguments, userid, userHome)
+				os.Exit(0)
+			} else {
+				fmt.Println("The image name is invalid")
+				showHelp(containerNames, customImageNames)
+				os.Exit(1)
+			}
+
 		}
 	}
 

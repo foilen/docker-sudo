@@ -8,7 +8,7 @@ import (
 	"syscall"
 )
 
-func showRun(customImageName string, userId string, userHome string) {
+func showRunCustomImage(customImageName string, userId string, userHome string) {
 
 	// Get a uuid to use as a tag
 	uuid, err := getCommandOutput("/usr/bin/uuidgen")
@@ -33,6 +33,20 @@ func showRun(customImageName string, userId string, userHome string) {
 		log.Fatal(err)
 	}
 	err = syscall.Exec("/usr/bin/docker", []string{"docker", "run", "-ti", "--rm", "-u", userId, "-v", userHome + ":" + userHome, "-w", workDir, uuid, "/bin/bash"}, nil)
+	if err != nil {
+		log.Fatal(err)
+	}
+
+}
+
+func showRunImage(imageName string, userId string, userHome string) {
+
+	// Run
+	workDir, err := os.Getwd()
+	if err != nil {
+		log.Fatal(err)
+	}
+	err = syscall.Exec("/usr/bin/docker", []string{"docker", "run", "-ti", "--rm", "-u", userId, "-v", userHome + ":" + userHome, "-w", workDir, imageName, "/bin/bash"}, nil)
 	if err != nil {
 		log.Fatal(err)
 	}
