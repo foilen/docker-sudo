@@ -5,6 +5,13 @@ import (
 	"syscall"
 )
 
+func showRestart(containerName string) {
+	err := syscall.Exec("/usr/bin/docker", []string{"docker", "restart", containerName}, nil)
+	if err != nil {
+		log.Fatal(err)
+	}
+}
+
 func showStart(containerName string) {
 	err := syscall.Exec("/usr/bin/docker", []string{"docker", "start", containerName}, nil)
 	if err != nil {
