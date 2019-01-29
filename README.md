@@ -23,6 +23,13 @@ Files with the list of containers per user:
   /etc/docker-sudo/containers-{userName}.conf
 Custom images folders:
   /etc/docker-sudo/images/{imageName}/Dockerfile
+
+(Optional) Config files with some parameters
+cat > /etc/docker-sudo/config.json << _EOF
+{
+	"network" : "myNetwork"
+}
+_EOF
 ```
 
 ## Execute

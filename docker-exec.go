@@ -8,7 +8,7 @@ import (
 	"syscall"
 )
 
-func showExecCustomImage(customImageName string, command string, arguments []string, userId string, userHome string) {
+func showExecCustomImage(customImageName string, command string, arguments []string, userId string, userHome string, network string) {
 
 	// Get a uuid to use as a tag
 	uuid, err := getCommandOutput("/usr/bin/uuidgen")
@@ -36,7 +36,7 @@ func showExecCustomImage(customImageName string, command string, arguments []str
 	if isTTY() {
 		tty = "-ti"
 	}
-	argv := []string{"docker", "run", tty, "--rm", "-u", userId, "-v", userHome + ":" + userHome, "-w", workDir, uuid, command}
+	argv := []string{"docker", "run", tty, "--rm", "-u", userId, "-v", userHome + ":" + userHome, "-w", workDir, "--network", network, uuid, command}
 	if len(arguments) > 0 {
 		tmp := make([]string, len(argv)+len(arguments))
 		copy(tmp, argv)
@@ -50,7 +50,7 @@ func showExecCustomImage(customImageName string, command string, arguments []str
 
 }
 
-func showExecImage(imageName string, command string, arguments []string, userId string, userHome string) {
+func showExecImage(imageName string, command string, arguments []string, userId string, userHome string, network string) {
 
 	// Run
 	workDir, err := os.Getwd()
@@ -61,7 +61,7 @@ func showExecImage(imageName string, command string, arguments []string, userId 
 	if isTTY() {
 		tty = "-ti"
 	}
-	argv := []string{"docker", "run", tty, "--rm", "-u", userId, "-v", userHome + ":" + userHome, "-w", workDir, imageName, command}
+	argv := []string{"docker", "run", tty, "--rm", "-u", userId, "-v", userHome + ":" + userHome, "-w", workDir, "--network", network, imageName, command}
 	if len(arguments) > 0 {
 		tmp := make([]string, len(argv)+len(arguments))
 		copy(tmp, argv)

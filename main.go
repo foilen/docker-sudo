@@ -22,6 +22,15 @@ func main() {
 	containerNames, _ := getContainerList(username)
 	customImageNames, _ := getCustomImagesList()
 
+	// Get the config if available
+	var network = "bridge"
+	dockerConfiguration, err := getDockerConfiguration("/etc/docker-sudo/config.json")
+	if err == nil {
+		network = dockerConfiguration.Network
+	} else if !os.IsNotExist(err) {
+		log.Fatal("Problem loading the file /etc/docker-sudo/config.json: ", err)
+	}
+
 	// Arguments
 	if len(os.Args) == 1 {
 		showHelp(containerNames, customImageNames)
@@ -155,13 +164,13 @@ func main() {
 		// Check custom image
 		imageName := os.Args[2]
 		if arrayContains(customImageNames, imageName) {
-			showRunCustomImage(imageName, userid, userHome)
+			showRunCustomImage(imageName, userid, userHome, network)
 			os.Exit(0)
 		} else {
 
 			// Check valid image name
 			if validateImageName(imageName) {
-				showRunImage(imageName, userid, userHome)
+				showRunImage(imageName, userid, userHome, network)
 				os.Exit(0)
 			} else {
 				fmt.Println("The image name is invalid")
@@ -184,13 +193,13 @@ func main() {
 		arguments := os.Args[4:]
 		if arrayContains(customImageNames, imageName) {
 			// Get command and arguments
-			showExecCustomImage(imageName, cmd, arguments, userid, userHome)
+			showExecCustomImage(imageName, cmd, arguments, userid, userHome, network)
 			os.Exit(0)
 		} else {
 
 			// Check valid image name
 			if validateImageName(imageName) {
-				showExecImage(imageName, cmd, arguments, userid, userHome)
+				showExecImage(imageName, cmd, arguments, userid, userHome, network)
 				os.Exit(0)
 			} else {
 				fmt.Println("The image name is invalid")
