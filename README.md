@@ -7,13 +7,13 @@ This is an application to let users use some parts of Docker, but only on their 
 
 ## Compile
 
-`./gradlew clean build` 
+`./create-local-release.sh` 
 
 ## Install
 
 ```
-sudo chown root ./build/gopath/build/out/docker-sudo
-sudo chmod u+s ./build/gopath/build/out/docker-sudo
+sudo chown root ./build/bin/docker-sudo
+sudo chmod u+s ./build/bin/docker-sudo
 ```
 
 ## Configure
@@ -35,10 +35,10 @@ _EOF
 ## Execute
 
 To see the help:
-`./build/gopath/build/out/docker-sudo`
+`./build/bin/docker-sudo`
 
 To see ps:
-`./build/gopath/build/out/docker-sudo ps`
+`./build/bin/docker-sudo ps`
 
 # Create release
 
