@@ -32,7 +32,11 @@ func showRunCustomImage(customImageName string, userId string, userHome string, 
 	if err != nil {
 		log.Fatal(err)
 	}
-	err = syscall.Exec("/usr/bin/docker", []string{"docker", "run", "-ti", "--rm", "-u", userId, "-v", userHome + ":" + userHome, "-w", workDir, "--network", network, uuid, "/bin/bash"}, nil)
+	tty := "-i"
+	if isTTY() {
+		tty = "-ti"
+	}
+	err = syscall.Exec("/usr/bin/docker", []string{"docker", "run", tty, "--rm", "-u", userId, "-v", userHome + ":" + userHome, "-w", workDir, "--network", network, uuid, "/bin/bash"}, nil)
 	if err != nil {
 		log.Fatal(err)
 	}
@@ -46,7 +50,11 @@ func showRunImage(imageName string, userId string, userHome string, network stri
 	if err != nil {
 		log.Fatal(err)
 	}
-	err = syscall.Exec("/usr/bin/docker", []string{"docker", "run", "-ti", "--rm", "-u", userId, "-v", userHome + ":" + userHome, "-w", workDir, "--network", network, imageName, "/bin/bash"}, nil)
+	tty := "-i"
+	if isTTY() {
+		tty = "-ti"
+	}
+	err = syscall.Exec("/usr/bin/docker", []string{"docker", "run", tty, "--rm", "-u", userId, "-v", userHome + ":" + userHome, "-w", workDir, "--network", network, imageName, "/bin/bash"}, nil)
 	if err != nil {
 		log.Fatal(err)
 	}
