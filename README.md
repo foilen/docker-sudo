@@ -4,10 +4,11 @@ This is an application to let users use some parts of Docker, but only on their 
 
 # Local Usage
 
-
 ## Compile
 
-`./create-local-release.sh` 
+`./create-local-release.sh`
+
+The file is then in `build/bin/docker-sudo`
 
 ## Install
 
@@ -44,13 +45,16 @@ To see ps:
 
 `./create-public-release.sh`
 
+That will show the latest created version. Then, you can choose one and execute:
+`./create-public-release.sh X.X.X`
+
 # Use with debian
 
+Get the version you want from https://deploy.foilen.com/docker-sudo/ .
+
 ```bash
-echo "deb https://dl.bintray.com/foilen/debian stable main" | sudo tee /etc/apt/sources.list.d/foilen.list
-sudo apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv-keys 379CE192D401AB61
-sudo apt update
-sudo apt install docker-sudo
+wget https://deploy.foilen.com/docker-sudo/docker-sudo_X.X.X_amd64.deb
+sudo dpkg -i docker-sudo_X.X.X_amd64.deb
 ```
 
 # Commands
